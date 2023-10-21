@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Serialization;
+using _Scripts.EventSystems;
 
 namespace _Scripts.Multiplayer
 {
@@ -34,7 +35,7 @@ namespace _Scripts.Multiplayer
 
         private void Start()
         {
-            MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionPhase.Connect);
+            MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionEvent.Connect);
         }
 
         #endregion
@@ -44,13 +45,13 @@ namespace _Scripts.Multiplayer
         public override void OnConnectedToMaster()
         {
             Debug.Log("OnConnectedToMaster() was called by PUN", this);
-            MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionPhase.Connecting);
+            MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionEvent.Connecting);
             PhotonNetwork.JoinRandomRoom();
         }
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionPhase.Disconect);
+            MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionEvent.Disconect);
             Debug.LogWarningFormat("OnDisconnected() was called by PUN, cause :", cause);
         }
 
@@ -62,7 +63,7 @@ namespace _Scripts.Multiplayer
 
         public override void OnJoinedRoom()
         {
-            MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionPhase.Connect);
+            MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionEvent.Connect);
             Debug.Log("OnJoinedRoom() was called by PUN. Now this client is in a room", this);
         }
 

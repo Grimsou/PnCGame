@@ -4,32 +4,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MultiplayerEventSystem : MonoBehaviour
+namespace _Scripts.EventSystems
 {
-    public enum ConnexionPhase
+    public class MultiplayerEventSystem : MonoBehaviour
     {
-        Connecting,
-        Connect,
-        Disconect, 
-        FailedConnect
-    }
-    
-    public static MultiplayerEventSystem Instance;
+        #region ConnexionEvent enum
 
-    private void Awake()
-    {
-        if (Instance != null)
+        public enum ConnexionEvent
         {
-            Destroy(this);
+            Connecting,
+            Connect,
+            Disconect,
+            FailedConnect
         }
-        else
-        {
-            Instance = this;
-            Debug.Log("Instance of MultiplayeEventSystem has been created.");
-            DontDestroyOnLoad(Instance);
-        }
-    }
 
-    // Start is called before the first frame update
-    public UnityAction<ConnexionPhase> OnChangeConnexionPhase;
+
+        #endregion
+
+        public UnityAction<ConnexionEvent> OnChangeConnexionPhase;
+
+        #region Event system singleton
+
+        public static MultiplayerEventSystem Instance;
+
+        #endregion
+
+        #region MonoBehaviour CallBacks
+
+        private void Awake()
+        {
+            if (Instance != null)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+                Debug.Log("Instance of MultiplayeEventSystem has been created.");
+                DontDestroyOnLoad(Instance);
+            }
+        }
+
+
+        #endregion
+    }
 }

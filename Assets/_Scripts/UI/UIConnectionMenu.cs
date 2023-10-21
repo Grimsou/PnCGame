@@ -1,6 +1,7 @@
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using _Scripts.EventSystems;
 
 namespace _Scripts.UI
 {
@@ -8,9 +9,12 @@ namespace _Scripts.UI
     {
         #region Public fields
 
+        [Header("| UI Objects References |")]
+        [Space(5)]
         public TMP_InputField playerNameInputField;
-    
+        [Space(2)]
         public GameObject connectionUI;
+        [Space(2)]
         public GameObject loadingUI;
     
         #endregion
@@ -71,24 +75,24 @@ namespace _Scripts.UI
             PlayerPrefs.SetString(playerNamePrefKey, value);
         }
 
-        public void ManageUi(MultiplayerEventSystem.ConnexionPhase phase)  
+        private void ManageUi(MultiplayerEventSystem.ConnexionEvent @event)  
         {
-            switch (phase)
+            switch (@event)
             {
-                case MultiplayerEventSystem.ConnexionPhase.Connect :
+                case MultiplayerEventSystem.ConnexionEvent.Connect :
                     loadingUI.SetActive(false);
                     break;
-                case MultiplayerEventSystem.ConnexionPhase.Connecting : 
+                case MultiplayerEventSystem.ConnexionEvent.Connecting : 
                     connectionUI.SetActive(false);
                     loadingUI.SetActive(true);
                     break;
-                case MultiplayerEventSystem.ConnexionPhase.Disconect :
+                case MultiplayerEventSystem.ConnexionEvent.Disconect :
                     //Implement new behaviour
                     break;
-                case MultiplayerEventSystem.ConnexionPhase.FailedConnect :
+                case MultiplayerEventSystem.ConnexionEvent.FailedConnect :
                     //Implement new beahviour
                     break;
-                default: Debug.LogError("This connexion phase is not handled yet.", this);
+                default: Debug.LogError("This connexion @event is not handled yet.", this);
                     break;
             }
         }
