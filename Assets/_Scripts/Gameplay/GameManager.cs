@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -7,6 +8,12 @@ namespace _Scripts.Gameplay
 {
     public class GameManager : MonoBehaviourPunCallbacks
     {
+        #region Public Instance
+
+        public static GameManager Instance;
+
+        #endregion
+        
         #region Photon Callbacks
 
         //Called when the player leaves the room.
@@ -34,6 +41,23 @@ namespace _Scripts.Gameplay
             {
                 Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient);
                 LoadArena();
+            }
+        }
+
+        #endregion
+
+        #region MonoBehaviour Callbacks
+
+        private void Awake()
+        {
+            if (Instance)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+                DontDestroyOnLoad(this);
             }
         }
 
