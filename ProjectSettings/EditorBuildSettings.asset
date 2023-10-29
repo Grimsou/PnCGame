@@ -8,4 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/DevScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/_Scenes/Room for 1.unity
+    guid: a67f31f7a5ff9f640a05d8ece3325feb
+  - enabled: 1
+    path: Assets/_Scenes/Room for 2.unity
+    guid: 88cfac7139bfb2c44899e3791391becb
+  - enabled: 1
+    path: Assets/_Scenes/Room for 3.unity
+    guid: 3138297b66c768b499905c8af3edd78c
+  - enabled: 1
+    path: Assets/_Scenes/Room for 4.unity
+    guid: 1a3014bf500e5c141ba7816883aeb2ed
   m_configObjects: {}

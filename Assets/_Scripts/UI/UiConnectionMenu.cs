@@ -5,13 +5,13 @@ using _Scripts.EventSystems;
 
 namespace _Scripts.UI
 {
-    public class UIConnectionMenu : MonoBehaviour
+    public class UiConnectionMenu : MonoBehaviour
     {
         #region Public fields
 
         [Header("| UI Objects References |")]
         [Space(5)]
-        public TMP_InputField playerNameInputField;
+        public TMP_InputField inputPlayerName;
         [Space(2)]
         public GameObject connectionUI;
         [Space(2)]
@@ -21,7 +21,7 @@ namespace _Scripts.UI
     
         #region Private constant
     
-        private const string playerNamePrefKey = "PlayerName";
+        private const string PlayerNameKey = "PlayerName";
     
         #endregion
     
@@ -31,17 +31,17 @@ namespace _Scripts.UI
         {
             string defaultName = string.Empty;
     
-            if (playerNameInputField != null)
+            if (inputPlayerName != null)
             {
-                if (PlayerPrefs.HasKey(playerNamePrefKey))
+                if (PlayerPrefs.HasKey(PlayerNameKey))
                 {
                     //Debug.LogWarning($"Player name registered is : {PlayerPrefs.GetString("PlayerName")}");
-                    defaultName = PlayerPrefs.GetString(playerNamePrefKey);
-                    playerNameInputField.text = defaultName;
+                    defaultName = PlayerPrefs.GetString(PlayerNameKey);
+                    inputPlayerName.text = defaultName;
                 }
                 else
                 {
-                    playerNameInputField.text = "";
+                    inputPlayerName.text = "";
                 }
             }
     
@@ -72,7 +72,7 @@ namespace _Scripts.UI
             }
     
             PhotonNetwork.NickName = value;
-            PlayerPrefs.SetString(playerNamePrefKey, value);
+            PlayerPrefs.SetString(PlayerNameKey, value);
         }
 
         private void ManageUi(MultiplayerEventSystem.ConnexionEvent @event)  

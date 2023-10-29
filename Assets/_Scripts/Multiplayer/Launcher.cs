@@ -22,6 +22,9 @@ namespace _Scripts.Multiplayer
 
         //Current client version. 
         private string _gameVersion = "1";
+        
+        //Bool to check context
+        private bool _isConnecting;
 
         #endregion
 
@@ -45,8 +48,13 @@ namespace _Scripts.Multiplayer
         public override void OnConnectedToMaster()
         {
             Debug.Log("OnConnectedToMaster() was called by PUN", this);
-            MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionEvent.Connecting);
-            PhotonNetwork.JoinRandomRoom();
+            
+            if(_isConnecting)
+            {
+                PhotonNetwork.JoinRandomRoom();
+                MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionEvent.Connecting);
+                _isConnecting = false;
+            }
         }
 
         public override void OnDisconnected(DisconnectCause cause)
@@ -65,6 +73,16 @@ namespace _Scripts.Multiplayer
         {
             MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionEvent.Connect);
             Debug.Log("OnJoinedRoom() was called by PUN. Now this client is in a room", this);
+
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            {
+                Debug.Log("We load the 'Room for 1'");
+                
+                //# Critical
+                //Load the Room Level
+                
+                PhotonNetwork.LoadLevel("Room for 1");
+            }
         }
 
         #endregion
@@ -81,10 +99,11 @@ namespace _Scripts.Multiplayer
             if (PhotonNetwork.IsConnected)
             {
                 PhotonNetwork.JoinRandomRoom();
+                MultiplayerEventSystem.Instance.OnChangeConnexionPhase?.Invoke(MultiplayerEventSystem.ConnexionEvent.Connecting);
             }
             else
             {
-                PhotonNetwork.ConnectUsingSettings();
+                _isConnecting = PhotonNetwork.ConnectUsingSettings();
                 PhotonNetwork.GameVersion = _gameVersion;
             }
         }
