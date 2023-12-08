@@ -81,7 +81,7 @@ namespace _Scripts.Multiplayer
                 //# Critical
                 //Load the Room Level
                 
-                PhotonNetwork.LoadLevel("Room for 1");
+                PhotonNetwork.LoadLevel("TestScene");
             }
         }
 
